@@ -10,9 +10,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 if (UNIX)
 find_package(OpenMP)
-if (OPENMP_FOUND)
-	set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
-endif(OPENMP_FOUND)
+
 endif (UNIX)
 
 OPTION(BUILD_AS_SHARED_LIBS "Build all the libraries as shared" OFF)
@@ -44,6 +42,10 @@ else()
 endif ()
 
 target_include_directories(CompactNSearch PUBLIC include)
+if (OPENMP_FOUND)
+	target_compile_options(CompactNSearch PUBLIC ${OpenMP_CXX_FLAGS})
+	target_link_options(CompactNSearch PUBLIC ${OpenMP_CXX_FLAGS})
+endif(OPENMP_FOUND)
 
 install(FILES "include/CompactNSearch" ${HEADER_FILES}
 	DESTINATION include/)
@@ -53,9 +55,9 @@ install(TARGETS CompactNSearch
 	LIBRARY DESTINATION lib
 	ARCHIVE DESTINATION lib)
 	
-OPTION(USE_DOUBLE_PRECISION "Use double precision"	ON)
+OPTION(USE_DOUBLE_PRECISION "Use double precision"	OFF)
 if (USE_DOUBLE_PRECISION)
-	add_definitions( -DUSE_DOUBLE)	
+	target_compile_definitions(CompactNSearch PUBLIC -DUSE_DOUBLE)
 endif (USE_DOUBLE_PRECISION)	
 
 option(BUILD_DEMO "Build example of how to use this library."
