@@ -8,10 +8,14 @@ set_property(GLOBAL PROPERTY USE_FOLDERS on)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-if (UNIX)
-find_package(OpenMP)
+#if (UNIX)
+	find_package(OpenMP)
+#endif (UNIX)
 
-endif (UNIX)
+if (NOT ${OPENMP_FOUND})
+	set(OpenMP_CXX_FLAGS "-fopenmp")
+	set(OPENMP_FOUND true)
+endif()
 
 OPTION(BUILD_AS_SHARED_LIBS "Build all the libraries as shared" OFF)
 if (BUILD_AS_SHARED_LIBS)
