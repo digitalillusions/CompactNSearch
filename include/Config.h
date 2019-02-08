@@ -14,6 +14,8 @@ namespace CompactNSearch
 
 #ifdef _MSC_VER
 	#include <ppl.h>
+#elif __APPLE__
+	#include <dispatch/dispatch.h>
 #else
 	#include <parallel/algorithm>
 #endif
