@@ -36,7 +36,7 @@ add_library(CompactNSearch
 target_include_directories(CompactNSearch PUBLIC include ${OpenMP_INCLUDE_DIR})
 if (OPENMP_FOUND)
 	target_compile_options(CompactNSearch PUBLIC ${OpenMP_CXX_FLAGS})
-	target_link_options(CompactNSearch PUBLIC ${OpenMP_CXX_FLAGS})
+	target_link_libraries(CompactNSearch PUBLIC ${OpenMP_CXX_FLAGS})
 endif(OPENMP_FOUND)
 
 install(FILES "include/CompactNSearch" ${HEADER_FILES}
